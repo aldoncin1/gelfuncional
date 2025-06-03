@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Gel Funcional</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f3f3f3; }
+    h1 { color: #333; }
+    input, table { width: 100%; margin-top: 10px; }
+    table { border-collapse: collapse; margin-top: 20px; background: white; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background-color: #eee; }
+    .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .note { font-size: 0.9em; color: #666; margin-top: 10px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Calculadora de Ingredientes para Gel Funcional</h1>
+  <label for="kilos">¿Cuántos kilogramos deseas producir?</label>
+  <input type="number" id="kilos" value="10" min="0.1" step="0.1" onchange="calcular()">
+  <div class="note">* Los valores se ajustan automáticamente al ingresar la cantidad.</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Ingrediente</th>
+        <th>% Base 100 g</th>
+        <th>Cantidad (g)</th>
+      </tr>
+    </thead>
+    <tbody id="tabla">
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const ingredientes = [
+    { nombre: "Miel pura", porcentaje: 68.5 },
+    { nombre: "Glicerol", porcentaje: 23.5 },
+    { nombre: "BCAAs (2:1:1)", porcentaje: 5.0 },
+    { nombre: "Citrato de sodio", porcentaje: 2.0 },
+    { nombre: "Citrato de potasio", porcentaje: 1.0 },
+    { nombre: "Cafeína anhidra", porcentaje: 0.2 },
+    { nombre: "Goma xantana", porcentaje: 0.5 },
+    { nombre: "Ácido málico", porcentaje: 0.3 },
+    { nombre: "Sorbato de potasio", porcentaje: 0.1 },
+  ];
+
+  function calcular() {
+    const kilos = parseFloat(document.getElementById("kilos").value);
+    const gramos = kilos * 1000;
+    const tabla = document.getElementById("tabla");
+    tabla.innerHTML = "";
+
+    ingredientes.forEach(i => {
+      const cantidad = (i.porcentaje * gramos / 100).toFixed(2);
+      tabla.innerHTML += `
+        <tr>
+          <td>${i.nombre}</td>
+          <td>${i.porcentaje}%</td>
+          <td>${cantidad} g</td>
+        </tr>
+      `;
+    });
+  }
+
+  calcular();
+</script>
+</body>
+</html>
